@@ -60,13 +60,16 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.wangyeming.simplecamera.CameraIntentConstant;
 import com.wangyeming.simplecamera.ErrorConstant;
-import com.wangyeming.simplecamera.R;
+import com.wangyeming.simplecamera.FileUtils;
 import com.wangyeming.simplecamera.HandleCaptureView;
+import com.wangyeming.simplecamera.R;
 import com.wangyeming.simplecamera.interfaces.CameraCallback;
 import com.wangyeming.simplecamera.interfaces.CapturedImageHandle;
-import com.wangyeming.simplecamera.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -416,28 +419,46 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         }
     }
 
-    public static Camera2BasicFragment newInstance() {
+    public static Camera2BasicFragment newInstance(String url) {
         Camera2BasicFragment fragment = new Camera2BasicFragment();
+        Bundle bundle=new Bundle();
+        bundle.putString(Camera2Activity.IMG_URL,url);
+        fragment.setArguments(bundle);
         fragment.setRetainInstance(true);
         return fragment;
     }
 
     private ImageView mImageView;
+    private String imgUrl;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if (getArguments() != null) {
+            if (getArguments().containsKey(Camera2Activity.IMG_URL)) {
+                imgUrl = getArguments().getString(Camera2Activity.IMG_URL);
+            }
+        }
         return inflater.inflate(R.layout.fragment_camera2_basic, container, false);
     }
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
+
         view.findViewById(R.id.picture).setOnClickListener(this);
         mTextureView = (AutoFitTextureView) view.findViewById(R.id.texture);
         vHandleCaptureView = (HandleCaptureView) view.findViewById(R.id.camera_handle);
         vButtonFlipper = (ViewFlipper) view.findViewById(R.id.camera_flipper);
         vHandleCaptureView.setOnClickListener(this);
         mImageView=(ImageView)view.findViewById(R.id.templatePic);
+        mImageView.setAlpha(0.4f);
+        ImageLoader.getInstance().displayImage(imgUrl, mImageView, displayImageOptions);
     }
+    String  url="https://thumbnail0.baidupcs.com/thumbnail/bb229ae31036dcca87c6a92fbba0aa70?fid=1949288303-250528-816811836451505&time=1473235200&rt=sh&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-euFobFf247fEW9v%2FkN0PX9%2B8DdA%3D&expires=8h&chkv=0&chkbd=0&chkpc=&dp-logid=5813752240193937920&dp-callid=0&size=c710_u400&quality=100";
+    DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
+            .cacheInMemory(true)                        // 设置下载的图片是否缓存在内存中
+            .cacheOnDisk(true)                          // 设置下载的图片是否缓存在SD卡中
+            .displayer(new RoundedBitmapDisplayer(4))  // 设置成圆角图片
+            .build();                                   // 创建配置过得DisplayImageOption对象
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {

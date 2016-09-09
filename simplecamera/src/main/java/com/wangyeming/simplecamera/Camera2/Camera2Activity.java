@@ -26,13 +26,16 @@ import com.wangyeming.simplecamera.R;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class Camera2Activity extends Activity {
 
+    public static final String IMG_URL="imgUrl";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera2);
+        String url=null;
+        url=getIntent().getStringExtra(IMG_URL);
         if (null == savedInstanceState) {
             getFragmentManager().beginTransaction()
-                    .replace(R.id.container, Camera2BasicFragment.newInstance())
+                    .replace(R.id.container, Camera2BasicFragment.newInstance(url))
                     .commit();
         }
     }

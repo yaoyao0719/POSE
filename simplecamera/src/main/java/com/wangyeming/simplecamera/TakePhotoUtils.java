@@ -44,6 +44,17 @@ public class TakePhotoUtils {
 
     /**
      * 跳转拍照（camera2）
+     * @param activity
+     * @param requestCode
+     */
+    public static void takePhotoByCamera2(Activity activity, int requestCode,String url) {
+        Intent intent = new Intent(activity, Camera2Activity.class);
+        intent.putExtra(Camera2Activity.IMG_URL,url);
+        activity.startActivityForResult(intent, requestCode);
+    }
+
+    /**
+     * 跳转拍照（camera2）
      * @param fragment
      * @param requestCode
      */

@@ -16,6 +16,7 @@ import android.view.View;
 import com.android.customrecyclerview.ptr.CustomRecyclerView;
 import com.android.pose.R;
 import com.android.pose.adapter.PicGridRecyclerAdapter;
+import com.android.pose.data.StaticData;
 import com.android.pose.model.PosePic;
 import com.finalteam.galleryfinal.GalleryFinal;
 import com.finalteam.galleryfinal.model.PhotoInfo;
@@ -61,15 +62,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setRefreshEnable(false);
         mRecyclerView.setRefreshing(false);
-        PosePic posePic=new PosePic();
-        posePic.imgUrl="http://scimg.jb51.net/allimg/160815/103-160Q509544OC.jpg";
-        mPics.add(posePic);
-        mPics.add(posePic);
-        mPics.add(posePic);
-        mPics.add(posePic);
-        mPics.add(posePic);
-        mPics.add(posePic);
-        mAdapter.setList(mPics);
+        mAdapter.setList(StaticData.getData());
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

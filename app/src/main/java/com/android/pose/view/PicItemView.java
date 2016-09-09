@@ -48,7 +48,7 @@ public class PicItemView extends FrameLayout {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                TakePhotoUtils.takePhotoByCamera2((Activity) getContext(), REQUEST_CODE_FOR_CAMERA);
+                TakePhotoUtils.takePhotoByCamera2((Activity) getContext(), REQUEST_CODE_FOR_CAMERA,mPosePic.imgUrl);
             }
         });
     }
